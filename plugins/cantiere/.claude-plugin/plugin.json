@@ -1,0 +1,9 @@
+{
+  "name": "cantiere",
+  "description": "Creare ed eseguire piani a basso costo di contesto: /piano scrive un piano diviso in capitoli, /passo ne esegue uno per sessione, l'agente lettore esplora al posto tuo.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Simone Voso"
+  },
+  "homepage": "https://github.com/SimoneVoso/claude-metodo"
+}

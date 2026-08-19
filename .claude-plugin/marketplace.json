@@ -1,0 +1,14 @@
+{
+  "name": "claude-metodo",
+  "owner": {
+    "name": "Simone Voso"
+  },
+  "description": "Il metodo dei piani per Claude Code: piani a capitoli, una sessione per capitolo, esplorazione delegata a un agente economico di sola lettura.",
+  "plugins": [
+    {
+      "name": "cantiere",
+      "source": "./plugins/cantiere",
+      "description": "Creare ed eseguire piani a basso costo di contesto: /piano scrive, /passo esegue un capitolo per sessione, l'agente lettore esplora senza consumare il contesto."
+    }
+  ]
+}
