@@ -1,0 +1,9 @@
+{
+  "name": "metodo",
+  "description": "Il metodo dei piani: una sessione scrive il piano, ogni capitolo lo esegue una sessione nuova, e l'esplorazione la fa un agente economico di sola lettura.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Simone Voso"
+  },
+  "homepage": "https://github.com/SimoneVoso/claude-metodo"
+}
