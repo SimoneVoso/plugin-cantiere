@@ -1,7 +1,10 @@
 # claude-metodo
 
-Il **metodo dei piani** per Claude Code, in forma di plugin: un modo di affrontare i lavori grossi
-senza che progettarli consumi tutto il contesto prima di cominciare.
+Il plugin **`cantiere`** per Claude Code: creare ed eseguire piani **a basso costo di contesto**, cioè
+affrontare i lavori grossi senza che progettarli consumi tutto il contesto prima di cominciare.
+
+Si chiama così perché è esattamente quello che gestisce: un cantiere aperto — un lavoro grande,
+portato avanti a pezzi, dove ogni pezzo si chiude prima di aprire il successivo.
 
 ## L'idea, in tre righe
 
@@ -14,8 +17,8 @@ venti file e risponde con tre righe.
 
 | | Cosa fa |
 |---|---|
-| `/metodo:piano <obiettivo>` | La sessione che progetta: intervista, esplora tramite l'agente, decide, e scrive un piano diviso in capitoli con la riga di stato in cima. Non esegue niente. |
-| `/metodo:passo <n>` | La sessione che esegue: legge solo il capitolo n, lo fa, lo verifica, committa, aggiorna lo stato e si ferma. |
+| `/cantiere:piano <obiettivo>` | La sessione che progetta: intervista, esplora tramite l'agente, decide, e scrive un piano diviso in capitoli con la riga di stato in cima. Non esegue niente. |
+| `/cantiere:passo <n>` | La sessione che esegue: legge solo il capitolo n, lo fa, lo verifica, committa, aggiorna lo stato e si ferma. |
 | agente `lettore` | Sola lettura (`Read`, `Grep`, `Glob`) su modello `haiku`: trova dove stanno le cose e risponde con ancore `file:riga`. Non giudica e non può modificare niente. |
 
 Il piano è **due file**: `PIANO_<NOME>.md`, con un tetto di 4 KB perché viene letto a ogni sessione,
@@ -27,7 +30,7 @@ Dentro Claude Code:
 
 ```
 /plugin marketplace add SimoneVoso/claude-metodo
-/plugin install metodo@claude-metodo
+/plugin install cantiere@claude-metodo
 ```
 
 Se il riepilogo dice `Run /reload-plugins to activate.`, lancia `/reload-plugins`.
@@ -40,7 +43,7 @@ vedono la tua `~/.claude`, dichiaralo nel `.claude/settings.json` del progetto:
   "extraKnownMarketplaces": {
     "claude-metodo": { "source": { "source": "github", "repo": "SimoneVoso/claude-metodo" } }
   },
-  "enabledPlugins": ["metodo@claude-metodo"]
+  "enabledPlugins": ["cantiere@claude-metodo"]
 }
 ```
 
@@ -55,7 +58,7 @@ scritte in un `CLAUDE.md` globale si pagherebbero in ogni sessione di ogni proge
 ```
 claude-metodo/
 ├── .claude-plugin/marketplace.json     il catalogo
-└── plugins/metodo/
+└── plugins/cantiere/
     ├── .claude-plugin/plugin.json
     ├── agents/lettore.md               l'agente economico di sola lettura
     └── skills/

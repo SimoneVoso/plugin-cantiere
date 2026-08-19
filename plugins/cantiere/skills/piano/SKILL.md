@@ -1,6 +1,6 @@
 ---
 name: piano
-description: Scrive un piano di lavoro diviso in capitoli, dove ogni capitolo è eseguibile da una sessione nuova con /metodo:passo. Da usare quando un lavoro è troppo grosso per una sessione sola, o quando progettare rischia di consumare tutto il contesto.
+description: Scrive un piano di lavoro diviso in capitoli, dove ogni capitolo è eseguibile da una sessione nuova con /cantiere:passo. Da usare quando un lavoro è troppo grosso per una sessione sola, o quando progettare rischia di consumare tutto il contesto.
 argument-hint: [obiettivo del lavoro]
 disable-model-invocation: true
 ---
@@ -11,7 +11,7 @@ Stai facendo **solo** il piano di: **$ARGUMENTS**
 
 Questa sessione può consumare tutto il contesto che vuole: il suo unico prodotto è un file
 committato. **Non esegui niente di ciò che pianifichi**, nemmeno il primo capitolo, nemmeno se
-sembra banale: chi esegue è una sessione nuova, con `/metodo:passo`.
+sembra banale: chi esegue è una sessione nuova, con `/cantiere:passo`.
 
 ## La regola che governa tutto il resto
 
@@ -80,7 +80,7 @@ dei piani); altrimenti nella radice del progetto.
 Commit del solo piano, messaggio `piano <nome>: scritto`. Poi **fermati** e di' all'utente, con
 queste parole:
 
-> Il piano è scritto e committato. **Apri una sessione nuova** e lancia `/metodo:passo 1`.
+> Il piano è scritto e committato. **Apri una sessione nuova** e lancia `/cantiere:passo 1`.
 > Questa sessione ha in pancia tutta l'esplorazione: eseguire da qui vanificherebbe il metodo.
 
 ## Le tre cose che rovinano un piano

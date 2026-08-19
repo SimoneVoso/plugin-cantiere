@@ -6,9 +6,9 @@
   "description": "Il metodo dei piani per Claude Code: piani a capitoli, una sessione per capitolo, esplorazione delegata a un agente economico di sola lettura.",
   "plugins": [
     {
-      "name": "metodo",
-      "source": "./plugins/metodo",
-      "description": "Il metodo dei piani: /piano scrive un piano a capitoli, /passo ne esegue uno solo, l'agente lettore esplora al posto tuo senza consumare il contesto."
+      "name": "cantiere",
+      "source": "./plugins/cantiere",
+      "description": "Creare ed eseguire piani a basso costo di contesto: /piano scrive, /passo esegue un capitolo per sessione, l'agente lettore esplora senza consumare il contesto."
     }
   ]
 }

@@ -32,13 +32,13 @@ Due file. Copia le due impalcature qui sotto e riempile; non aggiungere sezioni 
 
 ## Scoperte durante l'esecuzione
 
-<Vuoto all'inizio. Ci scrive `/metodo:passo` quando trova qualcosa che il piano non prevedeva.>
+<Vuoto all'inizio. Ci scrive `/cantiere:passo` quando trova qualcosa che il piano non prevedeva.>
 ```
 
 ### Le righe che contano
 
 - **La riga di stato**, in cima: è ciò che permette di riprendere leggendo tre righe invece di
-  ricostruire tutto. La aggiorna `/metodo:passo` a ogni capitolo, nello stesso commit.
+  ricostruire tutto. La aggiorna `/cantiere:passo` a ogni capitolo, nello stesso commit.
 - **`File:`** sono ancore vere, con il numero di riga dove il numero ha senso. È la differenza tra un
   capitolo eseguibile e un capitolo che va riesplorato.
 - **`Verifica:`** dev'essere eseguibile da qualcun altro. "Controllare che funzioni" non è una

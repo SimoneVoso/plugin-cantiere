@@ -1,6 +1,6 @@
 ---
 name: passo
-description: Esegue un solo capitolo di un piano scritto con /metodo:piano, lo verifica, lo committa e si ferma. Da lanciare in una sessione appena aperta, una per capitolo.
+description: Esegue un solo capitolo di un piano scritto con /cantiere:piano, lo verifica, lo committa e si ferma. Da lanciare in una sessione appena aperta, una per capitolo.
 argument-hint: [numero del capitolo]
 disable-model-invocation: true
 ---
@@ -71,7 +71,7 @@ corretto a metà esecuzione da chi ha il contesto pieno di codice è come nascon
 Riporta in tre righe: cosa è stato fatto, cosa ha detto la verifica, qual è il capitolo successivo.
 Poi la frase che chiude ogni esecuzione:
 
-> Capitolo <n> fatto e committato. **Apri una sessione nuova** e lancia `/metodo:passo <n+1>`.
+> Capitolo <n> fatto e committato. **Apri una sessione nuova** e lancia `/cantiere:passo <n+1>`.
 
 Se era l'ultimo capitolo, invece: ricorda che un piano concluso non resta un piano — il perché va
 condensato nel diario delle decisioni del progetto e i due file si cancellano.
