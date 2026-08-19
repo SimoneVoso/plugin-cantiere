@@ -54,18 +54,39 @@ Se il riepilogo dice `Run /reload-plugins to activate.`, lancia `/reload-plugins
 la differenza tra avere `lettore` in *questo* repository soltanto e averlo **in ogni progetto aperto
 da questa macchina**, senza reinstallare né riconfigurare nulla per ciascuno.
 
-Per farlo arrivare anche alle **sessioni cloud** (claude.ai/code), che girano su un container e non
-vedono la tua `~/.claude` — nemmeno se hai installato a livello utente sul tuo PC — dichiaralo nel
-`.claude/settings.json` **di ciascun repository** che userai da lì:
+Per le **sessioni cloud** (claude.ai/code) serve un passo in più. Girano su un container che non vede
+la tua `~/.claude` — nemmeno se hai installato a livello utente sul tuo PC — e il
+`.claude/settings.json` del repository **non basta da solo**: da scope di progetto Claude Code onora
+`extraKnownMarketplaces`, e all'avvio clona e registra il marketplace, ma **non** `enabledPlugins`.
+Dalla versione 2.1.195, un plugin che viene da una sorgente esterna e che solo il `settings.json` del
+progetto abilita non si carica finché qualcuno non lo installa davvero.
+
+Dichiarare il marketplace nel repository serve comunque, così nessuno deve aggiungerlo a mano:
 
 ```json
 {
   "extraKnownMarketplaces": {
     "plugin-cantiere": { "source": { "source": "github", "repo": "SimoneVoso/plugin-cantiere" } }
   },
-  "enabledPlugins": ["cantiere@plugin-cantiere"]
+  "enabledPlugins": { "cantiere@plugin-cantiere": true }
 }
 ```
+
+`enabledPlugins` è un **oggetto**, non un elenco: la forma `["cantiere@plugin-cantiere"]` è quella
+vecchia, e Claude Code chiede di migrarla. Nel cloud non installa niente in nessuna delle due forme,
+ma vale per le sessioni locali e documenta l'intenzione.
+
+L'installazione vera va nel **setup script dell'ambiente cloud**, che si configura su claude.ai e non
+nel repository:
+
+```bash
+claude plugin marketplace add SimoneVoso/plugin-cantiere
+claude plugin install cantiere@plugin-cantiere
+```
+
+Si scrive una volta sola e vale per ogni repository aperto da quell'ambiente. Se l'immagine del
+container te la costruisci tu, l'alternativa è `CLAUDE_CODE_PLUGIN_SEED_DIR`, che pre-popola i plugin
+a build time senza clonare niente all'avvio.
 
 ## Perché una skill e non un `CLAUDE.md`
 
