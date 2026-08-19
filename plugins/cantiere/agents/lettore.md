@@ -1,6 +1,6 @@
 ---
 name: lettore
-description: Trova dove sta una cosa nel codice e risponde con ancore file:riga e citazioni brevi. Usalo ogni volta che la domanda è "dove si trova / come è fatto / esiste già", invece di aprire file per scoprirlo. Non giudica, non propone, non modifica niente.
+description: Trova dove sta una cosa nel codice e risponde con ancore file:riga e citazioni brevi, in un modello economico. Usalo SEMPRE che la domanda è "dove si trova / come è fatto / esiste già" — non solo dentro /cantiere:piano e /cantiere:passo, in qualunque momento di qualunque sessione, invece di aprire file per scoprirlo. Non giudica, non propone, non modifica niente.
 tools: Read, Grep, Glob
 model: haiku
 color: cyan

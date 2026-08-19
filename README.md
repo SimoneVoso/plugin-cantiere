@@ -24,6 +24,21 @@ venti file e risponde con tre righe.
 Il piano è **due file**: `PIANO_<NOME>.md`, con un tetto di 4 KB perché viene letto a ogni sessione,
 e `PIANO_<NOME>_DOSSIER.md`, che non apre nessuno se non serve e dove quindi lo spazio è gratis.
 
+### `lettore` non è solo per `/cantiere:piano` e `/cantiere:passo`
+
+Le due skill lo chiamano sempre, ma **è un agente a sé**: una volta installato, resta disponibile
+per qualunque domanda del tipo "dove sta / com'è fatto / esiste già", in qualunque momento della
+sessione, anche senza aver lanciato nessuna delle due skill. Non serve chiederlo esplicitamente per
+nome: la sua descrizione è scritta apposta perché Claude lo scelga da solo quando la domanda è di
+quel genere — lo stesso meccanismo per cui sceglie l'agente `Explore` integrato, con la differenza
+che `lettore` è pinnato su un modello economico e quello integrato di solito eredita il modello
+principale.
+
+**Non serve nemmeno installare il plugin per ottenere il risparmio**: qualunque subagent si lanci
+con un parametro `model` esplicito (`haiku`, per esempio) legge al posto tuo a un costo più basso,
+in ogni sessione, con o senza `cantiere`. Installare il plugin serve a **non doverlo chiedere ogni
+volta**: la scelta diventa automatica, in ogni progetto dove `lettore` è disponibile.
+
 ## Installazione
 
 Dentro Claude Code:
@@ -35,8 +50,13 @@ Dentro Claude Code:
 
 Se il riepilogo dice `Run /reload-plugins to activate.`, lancia `/reload-plugins`.
 
+**Scegli lo scope utente** ("install for yourself across all projects"), non quello di progetto: è
+la differenza tra avere `lettore` in *questo* repository soltanto e averlo **in ogni progetto aperto
+da questa macchina**, senza reinstallare né riconfigurare nulla per ciascuno.
+
 Per farlo arrivare anche alle **sessioni cloud** (claude.ai/code), che girano su un container e non
-vedono la tua `~/.claude`, dichiaralo nel `.claude/settings.json` del progetto:
+vedono la tua `~/.claude` — nemmeno se hai installato a livello utente sul tuo PC — dichiaralo nel
+`.claude/settings.json` **di ciascun repository** che userai da lì:
 
 ```json
 {
