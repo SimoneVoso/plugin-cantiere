@@ -1,4 +1,4 @@
-# claude-metodo
+# plugin-cantiere
 
 Il plugin **`cantiere`** per Claude Code: creare ed eseguire piani **a basso costo di contesto**, cioè
 affrontare i lavori grossi senza che progettarli consumi tutto il contesto prima di cominciare.
@@ -44,8 +44,8 @@ volta**: la scelta diventa automatica, in ogni progetto dove `lettore` è dispon
 Dentro Claude Code:
 
 ```
-/plugin marketplace add SimoneVoso/claude-metodo
-/plugin install cantiere@claude-metodo
+/plugin marketplace add SimoneVoso/plugin-cantiere
+/plugin install cantiere@plugin-cantiere
 ```
 
 Se il riepilogo dice `Run /reload-plugins to activate.`, lancia `/reload-plugins`.
@@ -61,9 +61,9 @@ vedono la tua `~/.claude` — nemmeno se hai installato a livello utente sul tuo
 ```json
 {
   "extraKnownMarketplaces": {
-    "claude-metodo": { "source": { "source": "github", "repo": "SimoneVoso/claude-metodo" } }
+    "plugin-cantiere": { "source": { "source": "github", "repo": "SimoneVoso/plugin-cantiere" } }
   },
-  "enabledPlugins": ["cantiere@claude-metodo"]
+  "enabledPlugins": ["cantiere@plugin-cantiere"]
 }
 ```
 
@@ -76,7 +76,7 @@ scritte in un `CLAUDE.md` globale si pagherebbero in ogni sessione di ogni proge
 ## Struttura
 
 ```
-claude-metodo/
+plugin-cantiere/
 ├── .claude-plugin/marketplace.json     il catalogo
 └── plugins/cantiere/
     ├── .claude-plugin/plugin.json
