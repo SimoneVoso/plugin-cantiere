@@ -68,4 +68,4 @@ La fase è completata quando:
 
 ---
 
-**Prossima fase**: [Fase 3: Integrazione GitHub MCP](./cantiere-fasi-markdown-fase-3.md)
+**Prossima fase**: [Fase 3: Integrazione GitHub MCP](./fase_integrazione-github_fasi-markdown.md)

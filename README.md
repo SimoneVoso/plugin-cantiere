@@ -15,19 +15,12 @@ venti file e risponde con tre righe.
 
 ## Cosa contiene
 
-### Sistema a Capitoli (Piano + Passo)
+### Sistema a Fasi (UNICO)
 
 | | Cosa fa |
 |---|---|
-| `/cantiere:piano <obiettivo>` | La sessione che progetta: intervista, esplora tramite l'agente, decide, e scrive un piano diviso in capitoli con la riga di stato in cima. Non esegue niente. |
-| `/cantiere:passo <n>` | La sessione che esegue: legge solo il capitolo n, lo fa, lo verifica, committa, aggiorna lo stato e si ferma. |
-
-### Sistema a Fasi (Apri-Fasi + Fase) — **NUOVO**
-
-| | Cosa fa |
-|---|---|
-| `/cantiere:apri-fasi <nome>` | Apri il cantiere: crea il documento `FASI.md` con tutte le 4 fasi strutturate in italiano (0, 1, 2, 3). Committa il file e si ferma. |
-| `/cantiere:fase <n>` | Esegui una singola fase: legge il documento FASI.md, esegue la fase n, verifica, committa, fai push automatico e crea/aggiorna la PR. Una fase per sessione. |
+| `/cantiere:apri-fasi <nome>` | Apri il cantiere: crea un documento `cantiere_<nome>.md` con tutte le fasi strutturate in italiano. Committa il file e si ferma. |
+| `/cantiere:fase <n>` | Esegui una singola fase: legge il documento della fase, la esegue, verifica, committa, fai push automatico e crea/aggiorna la PR. Una fase per sessione. |
 
 ### Supporto
 
@@ -102,43 +95,44 @@ Si scrive una volta sola e vale per ogni repository aperto da quell'ambiente. Se
 container te la costruisci tu, l'alternativa è `CLAUDE_CODE_PLUGIN_SEED_DIR`, che pre-popola i plugin
 a build time senza clonare niente all'avvio.
 
-## Flusso di lavoro con le fasi
+## Flusso di lavoro
 
-Il sistema a fasi è pensato per cantieri **strutturati in 4 tappe**: preparazione, implementazione, testing, finalizzazione.
+Il sistema a fasi è l'**unico metodo** per gestire cantieri grandi. È pensato per strutture **flessibili**: puoi avere 3, 5, 10 fasi a seconda del cantiere.
 
-### Come usare il sistema a fasi
+### Come usare il sistema
 
 1. **Apri il cantiere** (sessione 1):
    ```
-   /cantiere:apri-fasi "Nome del progetto"
+   /cantiere:apri-fasi "Nome del cantiere"
    ```
-   Crea il file `FASI.md` con tutte le 4 fasi. Il file viene committato e pushato.
+   Crea il file `cantiere_<nome>.md` con tutte le fasi strutturate in italiano. Il file viene committato e pushato.
 
-2. **Esegui ogni fase in una sessione nuova** (sessioni 2, 3, 4, 5):
+2. **Esegui ogni fase in una sessione nuova** (una sessione per fase):
    ```
-   /cantiere:fase 0
    /cantiere:fase 1
    /cantiere:fase 2
    /cantiere:fase 3
+   ...
    ```
    Ogni fase:
-   - Legge il suo blocco da FASI.md
+   - Legge il suo blocco da `fase_<nomeFase>_<nomeC antiere>.md`
    - Esegue il lavoro
    - Verifica il risultato
    - Committa, fai push e aggiorna la PR **automaticamente**
-   - Chiude la sessione
+   - Quando conclusa, il file viene rinominato con `_conclusa`
 
-3. **Chiudi il cantiere** (dopo fase 3):
+3. **Chiudi il cantiere** (dopo l'ultima fase):
    - Fai merge della PR
-   - Cancella `FASI.md` (non serve più)
+   - Cancella il file `cantiere_<nome>.md` (non serve più)
    - Condensa le decisioni in CHANGELOG.md o docs/
 
-### Vantaggi del sistema a fasi
+### Vantaggi
 
 - **Una sessione per fase**: ogni sessione reparte pulita, con memoria zero
-- **Automatizzazione**: push e PR sono automatici, niente comandi manuali
-- **Fasi standardizzate**: sempre 4 fasi, sempre ben documentate
-- **Italiano**: tutte le istruzioni sono in italiano
+- **Automatizzazione completa**: push e PR sono automatici, niente comandi manuali
+- **Fasi flessibili**: puoi avere tante fasi quante ne servono
+- **Tracciamento**: i file di fase si rinominano automaticamente quando conclusi
+- **Italiano**: tutte le istruzioni e i messaggi sono in italiano
 - **Verifiche obbligatorie**: ogni fase verifica che il lavoro sia fatto davvero
 
 ---
@@ -154,12 +148,12 @@ scritte in un `CLAUDE.md` globale si pagherebbero in ogni sessione di ogni proge
 ```
 plugin-cantiere/
 ├── .claude-plugin/marketplace.json        il catalogo
+├── cantiere_<nome>.md                     documento principale del cantiere
+├── fase_<nomeFase>_<nomeCantiere>.md     documenti delle fasi (rinominati _conclusa quando finiti)
 └── plugins/cantiere/
     ├── .claude-plugin/plugin.json
     ├── agents/lettore.md                  l'agente economico di sola lettura
     └── skills/
-        ├── piano/SKILL.md + MODELLO.md   il formato del piano (sistema capitoli)
-        ├── passo/SKILL.md                esecuzione capitoli singoli
         ├── apri-fasi/SKILL.md            apri cantiere con fasi
-        └── fase/SKILL.md                 esecuzione fase singola + push/PR
+        └── fase/SKILL.md                 esecuzione fase singola + push/PR automatico
 ```

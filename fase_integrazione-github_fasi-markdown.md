@@ -70,4 +70,4 @@ La fase è completata quando:
 
 ---
 
-**Prossima fase**: [Fase 4: Testing Completo](./cantiere-fasi-markdown-fase-4.md)
+**Prossima fase**: [Fase 4: Testing Completo](./fase_testing-completo_fasi-markdown.md)

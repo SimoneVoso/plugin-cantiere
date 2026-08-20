@@ -68,4 +68,4 @@ La fase è completata quando:
 
 ---
 
-**Prossima fase**: [Fase 2: Rinomina File Conclusi](./cantiere-fasi-markdown-fase-2.md)
+**Prossima fase**: [Fase 2: Rinomina File Conclusi](./fase_rinomina-file_fasi-markdown.md)

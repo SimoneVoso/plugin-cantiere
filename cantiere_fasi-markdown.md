@@ -39,11 +39,11 @@ Avere un sistema di cantiere completamente funzionale dove:
 
 ## 🔗 Documenti delle Fasi
 
-- [Fase 1: Automazione Push/PR](./cantiere-fasi-markdown-fase-1.md)
-- [Fase 2: Rinomina File Conclusi](./cantiere-fasi-markdown-fase-2.md)
-- [Fase 3: Integrazione GitHub MCP](./cantiere-fasi-markdown-fase-3.md)
-- [Fase 4: Testing Completo](./cantiere-fasi-markdown-fase-4.md)
-- [Fase 5: Documentazione Finale](./cantiere-fasi-markdown-fase-5.md)
+- [Fase 1: Automazione Push/PR](./fase_automazione-push-pr_fasi-markdown.md)
+- [Fase 2: Rinomina File Conclusi](./fase_rinomina-file_fasi-markdown.md)
+- [Fase 3: Integrazione GitHub MCP](./fase_integrazione-github_fasi-markdown.md)
+- [Fase 4: Testing Completo](./fase_testing-completo_fasi-markdown.md)
+- [Fase 5: Documentazione Finale](./fase_documentazione_fasi-markdown.md)
 
 ---
 
@@ -60,4 +60,4 @@ Avere un sistema di cantiere completamente funzionale dove:
 
 ---
 
-**Apri la [Fase 1](./cantiere-fasi-markdown-fase-1.md) per iniziare!**
+**Apri la [Fase 1](./fase_automazione-push-pr_fasi-markdown.md) per iniziare!**
