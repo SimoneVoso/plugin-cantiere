@@ -28,27 +28,30 @@ venti file e risponde con tre righe.
 |---|---|
 | agente `lettore` | Sola lettura (`Read`, `Grep`, `Glob`) su modello `haiku`: trova dove stanno le cose e risponde con ancore `file:riga`. Non giudica e non può modificare niente. |
 
-Il piano è **due file**: `PIANO_<NOME>.md`, con un tetto di 4 KB perché viene letto a ogni sessione,
-e `PIANO_<NOME>_DOSSIER.md`, che non apre nessuno se non serve e dove quindi lo spazio è gratis.
+### Agente `lettore`
 
-### `lettore` non è solo per `/cantiere:piano` e `/cantiere:passo`
-
-Le due skill lo chiamano sempre, ma **è un agente a sé**: una volta installato, resta disponibile
-per qualunque domanda del tipo "dove sta / com'è fatto / esiste già", in qualunque momento della
-sessione, anche senza aver lanciato nessuna delle due skill. Non serve chiederlo esplicitamente per
-nome: la sua descrizione è scritta apposta perché Claude lo scelga da solo quando la domanda è di
-quel genere — lo stesso meccanismo per cui sceglie l'agente `Explore` integrato, con la differenza
-che `lettore` è pinnato su un modello economico e quello integrato di solito eredita il modello
-principale.
-
-**Non serve nemmeno installare il plugin per ottenere il risparmio**: qualunque subagent si lanci
-con un parametro `model` esplicito (`haiku`, per esempio) legge al posto tuo a un costo più basso,
-in ogni sessione, con o senza `cantiere`. Installare il plugin serve a **non doverlo chiedere ogni
-volta**: la scelta diventa automatica, in ogni progetto dove `lettore` è disponibile.
+L'agente **`lettore`** è disponibile in **ogni progetto**, non solo nei cantieri:
+- Legge file, cerca, risponde con ancore `file:riga`
+- Costo ridotto (modello `haiku`)
+- Una volta installato il plugin, è disponibile automaticamente
+- Non serve richiederlo esplicitamente: Claude lo sceglie quando la domanda è del tipo "dove sta / com'è fatto"
 
 ## Installazione
 
-Dentro Claude Code:
+### Quick Install (Consigliato)
+
+Copia e incolla questo comando nel terminale:
+
+```bash
+claude plugin marketplace add SimoneVoso/plugin-cantiere || true
+claude plugin install cantiere@plugin-cantiere || true
+```
+
+Questo installa il plugin per **tutti i tuoi progetti** (scope utente).
+
+### Dentro Claude Code
+
+Se preferisci usare l'interfaccia:
 
 ```
 /plugin marketplace add SimoneVoso/plugin-cantiere
@@ -57,9 +60,7 @@ Dentro Claude Code:
 
 Se il riepilogo dice `Run /reload-plugins to activate.`, lancia `/reload-plugins`.
 
-**Scegli lo scope utente** ("install for yourself across all projects"), non quello di progetto: è
-la differenza tra avere `lettore` in *questo* repository soltanto e averlo **in ogni progetto aperto
-da questa macchina**, senza reinstallare né riconfigurare nulla per ciascuno.
+**Scegli lo scope utente** ("install for yourself across all projects"), non quello di progetto: avrai `lettore` **in ogni progetto aperto da questa macchina**, senza reinstallare per ciascuno.
 
 Per le **sessioni cloud** (claude.ai/code) serve un passo in più. Girano su un container che non vede
 la tua `~/.claude` — nemmeno se hai installato a livello utente sul tuo PC — e il
@@ -134,6 +135,20 @@ Il sistema a fasi è l'**unico metodo** per gestire cantieri grandi. È pensato 
 - **Tracciamento**: i file di fase si rinominano automaticamente quando conclusi
 - **Italiano**: tutte le istruzioni e i messaggi sono in italiano
 - **Verifiche obbligatorie**: ogni fase verifica che il lavoro sia fatto davvero
+
+---
+
+## Note sulla versione
+
+**v0.2.0** ⚠️ **BREAKING CHANGE**
+
+La versione 0.2.0 **rimuove completamente** il vecchio sistema piano + passo. 
+Ora esiste un solo metodo: **il sistema a fasi** con automatizzazione push/PR.
+
+Se stavi usando la versione 0.1.0:
+- ❌ `/cantiere:piano` non è più supportato
+- ❌ `/cantiere:passo` non è più supportato
+- ✅ Usa `/cantiere:apri-fasi` + `/cantiere:fase` (vedi sezione "Flusso di lavoro")
 
 ---
 
