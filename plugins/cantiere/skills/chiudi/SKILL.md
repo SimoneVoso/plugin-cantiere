@@ -2,13 +2,11 @@
 name: chiudi
 description: La fase conclusiva del cantiere. Verifica che tutto giri davvero, condensa il perché nel diario del progetto, cancella i file del cantiere (PIANO.md, FASE_*.md, .cantiere/), committa, pusha e lascia la PR pronta da fondere.
 disable-model-invocation: true
-model: opus
-effort: max
+model: sonnet
+effort: medium
 ---
 
 # /cantiere:chiudi — smontare il cantiere
-
-ultrathink
 
 Un cantiere finito **non resta un cantiere**. I file del piano servivano a portare il lavoro da una
 sessione all'altra: finito il lavoro sono peso morto, e un `PIANO.md` con «Stato: fatto» lasciato in
