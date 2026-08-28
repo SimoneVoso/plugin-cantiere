@@ -27,6 +27,16 @@ Poi leggi **solo** la riga di stato in cima e la tabella delle fasi.
 **Non aprire il file della fase**, e tantomeno quelli delle fasi successive: li apre l'esecutore, ed
 è il motivo per cui questa sessione resta leggera.
 
+Da quella tabella ricavi i due numeri che contano: **quale fase stai per fare e quante sono in
+tutto**. Prima di mandare chiunque, scrivili all'utente, in una riga:
+
+```
+**Fase 3 di 7** — Integrazione GitHub
+```
+
+Vale sempre, anche quando le fasi sono due e sembra ovvio: è l'unica riga da cui, da fuori, si
+capisce a che punto è il lavoro e quanto manca.
+
 ## 2. Controlla di poter partire
 
 - Segui `${CLAUDE_PLUGIN_ROOT}/LOCK.md`: se una fase risulta in corso, **fermati e chiedi**. Il
@@ -43,7 +53,7 @@ piano:
 > Decisioni) e `FASE_<NN>_<slug>.md`, fai il lavoro, lancia la verifica, segna la fase completa,
 > committa e pusha. Rispondi nella forma prevista.
 
-Ti risponderà con sei righe: cosa ha fatto, cosa ha stampato la verifica, lo sha del commit, le
+Ti risponderà con poche righe: cosa ha fatto, cosa ha stampato la verifica, lo sha del commit, le
 scoperte, la fase dopo. Il veto vale anche lì dentro (`${CLAUDE_PLUGIN_ROOT}/VETO.md`): se la fase
 non ha una verifica eseguibile, o non sta in un commit solo, l'esecutore si ferma e te lo dice.
 
@@ -85,7 +95,7 @@ cosa serve decidere.
 
 Tre righe: cosa è stato fatto, cosa ha detto la verifica, qual è la fase successiva. Poi:
 
-> **Fase <NN> completata, committata e pushata.** La PR è aggiornata.
+> **Fase <NN> di <N> completata, committata e pushata.** La PR è aggiornata.
 >
 > Per la prossima: `/cantiere:fase <N+1>`, **anche da qui** — la fase l'ha eseguita l'esecutore nel
 > suo contesto, questo è rimasto pulito e non c'è niente da azzerare.

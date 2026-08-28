@@ -9,7 +9,7 @@ fatto a pezzi, dove ogni pezzo si chiude prima di aprire il successivo.
 ## L'idea, in tre righe
 
 Una sessione **scrive** il piano e poi muore. Ogni fase la esegue un **agente che parte da un
-contesto pulito**, legge solo la fase sua, e risponde con sei righe: la sessione che coordina non si
+contesto pulito**, legge solo la fase sua, e risponde con poche righe: la sessione che coordina non si
 riempie mai, quindi le fasi possono andare una dopo l'altra **senza nessun `/clear` da premere**.
 L'esplorazione — la voce di spesa più grossa e la meno visibile — la fa un **agente di sola lettura
 su modello economico**, che legge venti file e risponde con tre righe.
@@ -20,11 +20,11 @@ su modello economico**, che legge venti file e risponde con tre righe.
 |---|---|
 | `/cantiere:piano <obiettivo>` | Apre il cantiere: scrive `PIANO.md` e un `FASE_<NN>_<slug>.md` per ogni fase, li committa e si ferma. **Non esegue niente.** Ha il **diritto di veto** su come si fa il piano. |
 | `/cantiere:fase [n]` | **Un passo alla volta.** Manda l'esecutore su una fase sola, controlla che sia vero, apre o aggiorna la PR. Poi si ferma, per farti guardare il passo prima del successivo. |
-| `/cantiere:veloce [n]` | **Cantiere veloce.** Le fasi **in catena**: esecutore → controllo → fase dopo, senza fermarsi a farti premere niente. Niente PR a ogni giro: quella la fa `/cantiere:chiudi`. |
+| `/cantiere:veloce [n]` | **Cantiere veloce.** Le fasi **in catena**: esecutore → controllo → fase dopo, senza fermarsi a farti premere niente. Prima di partire guarda quali fasi sono indipendenti e le manda **insieme**, in gruppi paralleli. Niente PR a ogni giro: quella la fa `/cantiere:chiudi`. |
 | `/cantiere:notturno` | **Cantiere notturno.** Un giro all'ora: se una fase è in corso non fa nulla, altrimenti manda l'esecutore sulla prossima fase e ne controlla l'esito. Ogni **cinque fasi** consecutive inserisce una refattorizzazione, e alla fine passa alla fase conclusiva. Non fa domande. |
 | `/cantiere:refattorizza [zona]` | Una passata di pulizia con le linee guida di **Robert C. Martin** (Clean Code, SOLID, regola del boy scout). Non cambia il comportamento, e i test devono essere verdi prima e dopo. |
 | `/cantiere:chiudi` | La fase conclusiva: verifica che tutto giri davvero, condensa il perché nel diario del progetto, **cancella i file del cantiere** e lascia la PR pronta da fondere. |
-| agente `esecutore` | Esegue **una fase** in un contesto suo, pulito: legge il `FASE_<NN>_*.md`, fa il lavoro, verifica, committa, pusha, e risponde con sei righe. È il pezzo che rende inutile il `/clear`. |
+| agente `esecutore` | Esegue **una fase** in un contesto suo, pulito: legge il `FASE_<NN>_*.md`, fa il lavoro, verifica, committa, pusha, e risponde con poche righe. È il pezzo che rende inutile il `/clear`. In **modalità parallela** fa lavoro e verifica e si ferma lì: il commit del gruppo lo fa il caposquadra. |
 | agente `lettore` | Sola lettura (`Read`, `Grep`, `Glob`) su modello `haiku`: trova dove stanno le cose e risponde con ancore `file:riga`. Non giudica e non può modificare niente. |
 
 ### Modello e impegno
@@ -42,10 +42,10 @@ Ogni mestiere sul modello che gli serve, dichiarato nel frontmatter:
 Il cantiere non è un esecutore di ordini: **ha diritto di veto su come si fa il piano**, e le sue
 nove regole stanno in [`plugins/cantiere/VETO.md`](plugins/cantiere/VETO.md).
 
-In breve: niente fasi senza verifica eseguibile, niente fase che non stia in un contesto e in un
-commit, ancore `file:riga` e non «nella zona di», nessuna fase che dipenda da scoperte di una fase
-successiva, i nomi dei file sono quelli e non si negoziano, chi pianifica non esegue, una fase finita
-si committa, niente allargamenti, un cantiere finito si smonta.
+In breve: niente fasi senza verifica eseguibile, niente fase che non stia in un contesto e nessun
+giro che non stia in un commit, ancore `file:riga` e non «nella zona di», nessuna fase che dipenda
+da scoperte di una fase successiva, i nomi dei file sono quelli e non si negoziano, chi pianifica non
+esegue, una fase finita si committa, niente allargamenti, un cantiere finito si smonta.
 
 Quando la richiesta viola una regola, il cantiere **contesta e si ferma**:
 
@@ -78,6 +78,25 @@ E quando il cantiere è finito **e tutto gira davvero**, `/cantiere:chiudi` canc
 progetto. Se qualcosa è rosso non si cancella niente: il cantiere resta aperto, ed è la risposta
 giusta.
 
+## A che punto siamo: «fase 3 di 7»
+
+Chi coordina — `/cantiere:fase`, `/cantiere:veloce`, `/cantiere:notturno` — **prima di mandare
+chiunque a lavorare scrive una riga** che dice quale fase comincia e quante sono in tutto:
+
+```
+**Fase 3 di 7** — Integrazione GitHub
+```
+
+e per un gruppo parallelo:
+
+```
+**Fasi 3 e 4 di 7**, in parallelo — Integrazione GitHub · Schermata impostazioni
+```
+
+Sembra poco e invece è l'unica cosa che, mentre il cantiere macina da solo, fa capire da fuori a che
+punto è e quanto manca — senza aprire `PIANO.md` e senza chiedere. Vale sempre, anche quando le fasi
+sono due.
+
 ## I tre modi di lavorare
 
 Stesso piano, ritmi diversi. Si possono mescolare: sono tutti e tre lo stesso ciclo.
@@ -102,6 +121,32 @@ l'esecutore, e qui resta solo il suo rapporto.
 
 Un comando solo, e le fasi vanno una dopo l'altra da sole. Non c'è nessun `/clear` da premere fra
 una e l'altra: il contesto sporco resta dentro l'esecutore, che a ogni fase è nuovo.
+
+E prima di partire, **guarda il piano per intero e cerca cosa può andare insieme**: il piano è già
+scritto, le fasi indipendenti si vedono da lì, e mandarle in parallelo non costa più che mandarle in
+fila. Il piano di marcia viene annunciato prima di cominciare:
+
+```
+Piano di marcia — 7 fasi:
+  fase 1 → da sola
+  fasi 2 e 3 → insieme (file disgiunti: src/api/, src/ui/)
+  fase 4 → da sola (tocca src/api/client.ts, come la 2)
+  fasi 5, 6 e 7 → insieme
+```
+
+Le condizioni stanno in [`plugins/cantiere/PARALLELO.md`](plugins/cantiere/PARALLELO.md) e sono
+quattro: **file disgiunti** (nemmeno uno che una crea e l'altra modifica), **nessuna dipendenza**,
+**verifiche che convivono** (stessa copia di lavoro, stesso momento), **fasi normali** (una passata
+di refattorizzazione non entra mai in un gruppo). Nel dubbio si va in fila: il parallelo è
+un'ottimizzazione, la fila è sempre corretta.
+
+Dentro un gruppo cambia **chi tiene la contabilità**: il segnale lo prende il caposquadra per tutto
+il gruppo, gli esecutori toccano solo i file della loro fase e **non committano**, e il commit è uno
+solo — `cantiere fasi 03+04: …`. Se una cade e l'altra tiene, si committa solo la verde: i file sono
+disgiunti apposta.
+
+`/cantiere:fase` e `/cantiere:notturno` non parallelizzano: la prima fa una fase per definizione, il
+secondo fa una cosa per giro.
 
 **Notturno** — quando vuoi trovarti il lavoro fatto:
 
@@ -194,13 +239,14 @@ plugin-cantiere/
     ├── .claude-plugin/plugin.json
     ├── VETO.md                         le nove regole su cui il cantiere ha il veto
     ├── LOCK.md                         come si vede se una fase è già in corso
+    ├── PARALLELO.md                    quando due fasi possono andare insieme
     ├── agents/
     │   ├── esecutore.md                esegue una fase in un contesto pulito
     │   └── lettore.md                  l'agente economico di sola lettura
     └── skills/
         ├── piano/SKILL.md              apre il cantiere e scrive le fasi  (+ MODELLO.md)
         ├── fase/SKILL.md               una fase e stop, con PR
-        ├── veloce/SKILL.md             le fasi in catena, senza fermarsi
+        ├── veloce/SKILL.md             le fasi in catena, in parallelo dove si può
         ├── notturno/SKILL.md           un giro all'ora, da solo
         ├── refattorizza/SKILL.md       la passata alla Robert Martin
         └── chiudi/SKILL.md             verifica, condensa, cancella, PR pronta

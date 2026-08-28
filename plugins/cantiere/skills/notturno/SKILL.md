@@ -86,7 +86,17 @@ ancora fresco.
 
 ### 3. Manda l'esecutore
 
-**Una cosa sola per giro**, e la fa lui. L'incarico è corto: non ha visto niente di questa sessione,
+Prima, **una riga che dice a che punto sei** — nel registro e nel messaggio del giro:
+
+```
+**Fase 3 di 7** — Integrazione GitHub
+```
+
+Per una passata di pulizia, `**Refattorizzazione** — dopo la fase 5 di 7`. Vale a ogni giro: la
+mattina, il rapporto si legge molto meglio se ogni giro dice da solo quanto mancava.
+
+**Una cosa sola per giro**, e la fa lui: niente gruppi paralleli, quelli sono di `/cantiere:veloce`.
+Qui il ritmo è un'ora per giro, e un giro fa una cosa. L'incarico è corto: non ha visto niente di questa sessione,
 ma legge i file da solo.
 
 Per una fase:
@@ -136,7 +146,7 @@ nell'ultimo messaggio**:
 3. **La verifica fallisce due giri di fila sulla stessa fase.** Non mandare un terzo esecutore:
    scrivi cosa è stato provato, e fermati come al punto 2.
 
-Il contesto di questa sessione cresce di sei righe a giro, perché il lavoro sta tutto dentro
+Il contesto di questa sessione cresce di poche righe a giro, perché il lavoro sta tutto dentro
 l'esecutore: se malgrado questo si sta riempiendo, non consegnare comandi da premere — scrivi lo
 stato nel registro, committa, e chiudi il ciclo dicendo che va rilanciato.
 

@@ -22,10 +22,10 @@ aggiungere sezioni che non servono. I nomi dei file sono quelli, sempre (veto, r
 
 ## Fasi
 
-| # | File | Titolo | Verifica | Stato |
-|---|---|---|---|---|
-| 1 | `FASE_01_<slug>.md` | <titolo> | `<comando>` | ⬜ da fare |
-| 2 | `FASE_02_<slug>.md` | <titolo> | `<comando>` | ⬜ da fare |
+| # | File | Titolo | Verifica | Dipende da | Stato |
+|---|---|---|---|---|---|
+| 1 | `FASE_01_<slug>.md` | <titolo> | `<comando>` | — | ⬜ da fare |
+| 2 | `FASE_02_<slug>.md` | <titolo> | `<comando>` | 1 | ⬜ da fare |
 
 Stati: ⬜ da fare · 🔨 in corso · ✅ **COMPLETA**
 
@@ -50,6 +50,10 @@ piano non prevedeva.>
   nel file della fase. Da lì si vede in un colpo d'occhio a che punto è il cantiere.
 - **`Verifica`** dev'essere eseguibile da qualcun altro: `npm test -- auth` e cosa deve stampare,
   non «controllare che funzioni».
+- **`Dipende da`**: i numeri delle fasi che devono essere finite prima, `—` se nessuna. La legge
+  `/cantiere:veloce` per decidere cosa può mandare in parallelo
+  (`${CLAUDE_PLUGIN_ROOT}/PARALLELO.md`). Una dipendenza vera non dichiarata è l'unico modo in cui
+  quel meccanismo sbaglia: nel dubbio si dichiara.
 
 ---
 
@@ -68,6 +72,9 @@ piano non prevedeva.>
 
 - `percorso/file.ext:120` — <cosa c'è lì>
 - `altro/file.ext:34-41` — <cosa c'è lì>
+
+<Tutti i file che la fase tocca, compresi quelli che crea: è da qui che `/cantiere:veloce` capisce
+se due fasi possono girare insieme, e un file dimenticato qui è una collisione lì.>
 
 ## Cosa fare
 

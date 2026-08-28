@@ -65,6 +65,16 @@ successiva. Sono le regole 1, 2 e 4 del veto, e valgono anche contro te stesso.
 Meglio sei fasi piccole che tre grosse: una fase troppo grande è quella che farà finire il contesto
 a metà, cioè esattamente il problema che questo metodo esiste per risolvere.
 
+**Scrivi le dipendenze, non lasciarle intuire.** Ogni riga della tabella ha una colonna *Dipende da*:
+ci vanno i numeri delle fasi che devono essere finite prima, e `—` quando non ce n'è nessuna. Non è
+burocrazia: `/cantiere:veloce` la legge per capire quali fasi può mandare **insieme**
+(`${CLAUDE_PLUGIN_ROOT}/PARALLELO.md`), e una dipendenza vera lasciata implicita è l'unico modo in
+cui quel meccanismo può fare danno. Nel dubbio, la dipendenza si dichiara.
+
+Le fasi indipendenti guadagnano se restano tali: quando puoi scegliere dove passa il taglio, taglia
+per **file**, non per strato — due fasi che toccano cartelle diverse vanno in parallelo, due fasi che
+si passano lo stesso file no, per quanto piccole siano.
+
 Se il cantiere è lungo, mettici in fondo una **fase di refattorizzazione** (`/cantiere:refattorizza`)
 prima della chiusura: `/cantiere:notturno` la inserisce da solo ogni cinque fasi, ma se il cantiere
 lo esegui a mano è meglio che sia scritta.
