@@ -1,7 +1,7 @@
 {
   "name": "cantiere",
-  "description": "Sistema a fasi per cantieri: /apri-fasi crea il cantiere, /fase esegue ogni fase con push e PR automatici. L'agente lettore esplora al posto tuo.",
-  "version": "0.2.0",
+  "description": "Il metodo dei cantieri: /piano scrive PIANO.md e le fasi (con diritto di veto), /fase ne esegue una per sessione, /veloce fa passo-controllo-commit-clear, /notturno lavora da solo un giro all'ora, /chiudi smonta il cantiere. Tutte le skill girano su opus a impegno massimo; l'agente lettore esplora su modello economico.",
+  "version": "1.0.0",
   "author": {
     "name": "Simone Voso"
   },
