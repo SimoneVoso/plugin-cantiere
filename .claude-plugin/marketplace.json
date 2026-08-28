@@ -3,12 +3,12 @@
   "owner": {
     "name": "Simone Voso"
   },
-  "description": "Il metodo dei piani per Claude Code: piani a capitoli, una sessione per capitolo, esplorazione delegata a un agente economico di sola lettura.",
+  "description": "Il metodo dei cantieri per Claude Code: piani a fasi con diritto di veto, una sessione per fase, esplorazione delegata a un agente economico di sola lettura.",
   "plugins": [
     {
       "name": "cantiere",
       "source": "./plugins/cantiere",
-      "description": "Creare ed eseguire piani a basso costo di contesto: /piano scrive, /passo esegue un capitolo per sessione, l'agente lettore esplora senza consumare il contesto."
+      "description": "Creare ed eseguire cantieri a basso costo di contesto: /piano scrive il piano e ha il veto su come si fa, /fase e /veloce eseguono una fase per sessione, /notturno lavora da solo un giro all'ora, /chiudi smonta il cantiere quando tutto gira."
     }
   ]
 }

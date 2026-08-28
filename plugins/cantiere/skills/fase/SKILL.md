@@ -1,150 +1,115 @@
 ---
 name: fase
-description: Esegui una singola fase del cantiere (0, 1, 2, o 3), verificala, committa il lavoro, fai il push e crea/aggiorna la PR automaticamente. Una fase per sessione, sempre.
-argument-hint: [numero della fase 0-3]
+description: Esegue una sola fase del cantiere, la verifica, la segna COMPLETA, committa, fa il push e crea o aggiorna la PR, poi si ferma. Una fase per sessione, pronti a ripartire da una sessione nuova.
+argument-hint: "[numero della fase]"
 disable-model-invocation: true
+model: opus
+effort: max
 ---
 
-# /fase — Esegui una fase singola del cantiere
+# /cantiere:fase — un passo alla volta
 
-Fase richiesta: **$ARGUMENTS** (se vuoto, cerca il numero nella riga di stato di FASI.md)
+Fase richiesta: **$ARGUMENTS** (se è vuoto, quella indicata dalla riga di stato di `PIANO.md`).
 
-Questa sessione esegue **una fase sola**. Non la successiva, nemmeno se avanza tempo. Ogni fase è una sessione nuova, completa, isolata.
+ultrathink
 
-## 1. Trova e leggi il documento FASI.md
+Esegui **una fase sola**. Non la successiva, nemmeno se avanza tempo o se sembra piccola: la
+sessione dopo ripartirà pulita, ed è quello il punto del metodo.
 
-Cerca `FASI.md` nella radice del progetto. Se non esiste, chiedi all'utente di lanciare `/cantiere:apri-fasi` prima.
+## 1. Leggi il minimo
 
-Leggi **solo**:
-- La riga di stato in cima
-- La sezione della fase richiesta
-- Nient'altro
+Cerca `PIANO.md` in radice. Se non c'è, di' all'utente di lanciare `/cantiere:piano` e fermati.
+Poi leggi **solo**:
 
-Non leggere le fasi successive: non ti servono e ciò che leggi lo paghi in contesto.
+- la riga di stato in cima e la tabella delle fasi,
+- la sezione **Decisioni**,
+- il file `FASE_<NN>_<slug>.md` della fase richiesta, e nient'altro.
+
+Non aprire i file delle fasi successive: non ti servono, e ciò che leggi lo paghi.
 
 ## 2. Controlla di poter partire
 
-- La copia di lavoro è pulita? Se ci sono modifiche non committate, chiedi conferma.
-- La fase richiesta è quella che FASI.md si aspetta? Se stai per rifare una fase già fatta, **chiedi conferma**.
-- Se il progetto ha documentazione propria (CLAUDE.md, docs/), leggila adesso.
+- Segui `${CLAUDE_PLUGIN_ROOT}/LOCK.md`: se una fase risulta in corso, **fermati e chiedi**.
+- La fase richiesta è quella che la riga di stato si aspetta? Se stai per rifarne una già
+  `✅ COMPLETA`, o per saltarne una, dillo e chiedi conferma.
+- Il piano regge il veto (`${CLAUDE_PLUGIN_ROOT}/VETO.md`)? Se la fase che stai per eseguire non ha una verifica
+  eseguibile, o non sta in un commit solo, non è una fase: contesta e fermati.
+- Se il progetto ha documentazione propria (`CLAUDE.md`, `docs/`), leggila adesso.
 
-## 3. Esegui la fase
+Poi prendi il segnale e porta la fase a **in corso** (`${CLAUDE_PLUGIN_ROOT}/LOCK.md`).
 
-- Per ogni domanda del tipo "dove sta / come è fatto", usa l'agente **`lettore`**: legge lui e ti restituisce ancore `file:riga`.
-- Apri e modifica **solo i file che FASI.md nomina**.
-- Non fare pulizie o miglioramenti non richiesti: allargare una fase è il modo più veloce di finire il contesto.
+## 3. Esegui, senza allargare
+
+- Per ogni domanda «dove sta / com'è fatto / esiste già», chiama l'agente **`lettore`**: legge lui e
+  ti risponde con ancore `file:riga`. Non aprire file per scoprire se sono quelli giusti.
+- Apri e modifica **i file che la fase nomina**. Se te ne serve un altro, va bene; se te ne servono
+  cinque, la fase era sbagliata: vedi il punto 7.
+- Niente pulizie, rinomine o miglioramenti non chiesti (veto, regola 8). La refattorizzazione ha una
+  fase sua: `/cantiere:refattorizza`.
 
 ## 4. Verifica davvero
 
-Esegui la verifica scritta in FASI.md e guarda l'esito. Se fallisce, la fase non è fatta:
-- Correggi il codice
-- Rilancia la verifica
-- Non passare oltre finché non passa
+Lancia la **Verifica** scritta nella fase e **guarda l'esito**. Se fallisce, la fase non è fatta:
+correggi, rilancia, e non passare oltre finché non passa. Non dichiarare fatto ciò che non hai
+visto funzionare, e non scrivere «dovrebbe funzionare».
 
-Non dichiarare fatto ciò che non hai visto funzionare.
+## 5. Segna la fase COMPLETA
 
-## 5. Committa il lavoro
+Due file, nello stesso commit del lavoro:
 
-Un commit solo con messaggio standardizzato:
-```
-cantiere fase <N>: <titolo della fase>
-```
-
-Esempio:
-```
-git add <file-modificati>
-git commit -m "cantiere fase 1: implementazione principale"
-```
-
-Nello **stesso** commit, aggiorna la riga di stato di FASI.md:
+- in `FASE_<NN>_<slug>.md`: `**Stato: COMPLETA**` e lo sha del commit; compila la sezione **Fatto**
+  con cosa hai fatto e cosa ha stampato la verifica;
+- in `PIANO.md`: la riga della tabella diventa `✅ **COMPLETA**`, e la riga di stato in cima passa
+  alla fase successiva:
 
 ```
-**Fase corrente: <N+1> di 3** · **Ultimo commit: <sha>** · **Stato: In esecuzione**
+**Fase corrente: <N+1> di <T>** · **Ultimo commit: <sha>** · **Stato: in esecuzione** · **Prossima azione: /cantiere:fase <N+1>**
 ```
 
-Se il progetto ha una convenzione sui commit (firma, branch), seguila.
+Il nome del file della fase **non cambia**: lo stato sta dentro, non nel nome.
 
-## 6. Push automatico
+## 6. Committa, pusha, apri o aggiorna la PR
 
-Fai il push del commit:
+Un commit solo, con il lavoro e i due aggiornamenti di stato:
+
+```bash
+git add <file-modificati> PIANO.md FASE_<NN>_<slug>.md
+git commit -m "cantiere fase <NN>: <titolo della fase>"
+```
+
+Se il progetto ha una convenzione sui commit o sul ramo, seguila. Poi il push, con quattro tentativi
+e attese di 2s, 4s, 8s, 16s se la rete fa i capricci:
 
 ```bash
 git push -u origin $(git rev-parse --abbrev-ref HEAD)
 ```
 
-Se il push fallisce per cause di rete, riprova fino a 4 volte con backoff esponenziale:
-- Tentativo 1: subito
-- Tentativo 2: attendi 2 secondi
-- Tentativo 3: attendi 4 secondi
-- Tentativo 4: attendi 8 secondi
-- Tentativo 5: attendi 16 secondi
+Poi rilascia il segnale (`rm -f .cantiere/IN-CORSO`) e apri la PR **se non esiste**, o aggiornane il
+corpo se c'è già. Una PR per cantiere, non una per fase.
 
-## 7. Crea o aggiorna la PR
+- **Titolo**: `Cantiere: <nome>`
+- **Corpo**: la tabella delle fasi di `PIANO.md` con gli stati aggiornati, e sotto, per la fase
+  appena chiusa, tre righe: cosa è stato fatto, cosa ha stampato la verifica, qual è la prossima.
 
-Usa lo strumento GitHub per creare una PR (se non esiste) o aggiornarla (se già esiste):
+## 7. Se la fase non regge, fermati e scrivilo
 
-**PR Title**: `Cantiere: fase <N> — <titolo>`
+Se scopri che la fase è incompleta, sbagliata o poggia su un presupposto falso, **non improvvisare
+un piano nuovo**: una fase corretta a metà esecuzione, da chi ha il contesto pieno di codice, è
+esattamente come nascono i piani sbagliati. Scrivi cosa hai trovato in **Scoperte durante
+l'esecuzione** di `PIANO.md`, committa quella sola modifica, rilascia il segnale e fermati dicendo
+cosa serve decidere.
 
-**PR Body**:
-```markdown
-## Cantiere: Fase <N>
+## 8. Chiudi la sessione
 
-### Cosa è stato fatto
-<Descrizione breve in italiano di cosa è stato realizzato in questa fase>
+Tre righe: cosa hai fatto, cosa ha detto la verifica, qual è la fase successiva. Poi:
 
-### Verifica
-La verifica della fase ha stampato:
-\`\`\`
-<output della verifica>
-\`\`\`
-
-### Note
-- **Fase**: <N> di 3
-- **Status**: Completata
-- **Prossimo passo**: Lanciare `/cantiere:fase <N+1>` in una nuova sessione
-
----
-_Cantiere: fase <N> completata_
-```
-
-Se la PR esiste già, aggiorna il body con il nuovo contenuto di questa fase.
-
-## 8. Chiudi e riporta
-
-Riporta in tre righe:
-1. Cosa è stato fatto in questa fase
-2. Esito della verifica
-3. Prossima azione
-
-Poi la frase che chiude:
-
-> **Fase <N> completata e committata.** ✅
+> **Fase <NN> completata, committata e pushata.** La PR è aggiornata.
 >
-> Il commit è stato pushato e la PR è stata creata/aggiornata.
+> **Apri una sessione nuova** e lancia `/cantiere:fase <N+1>`.
+
+Se era l'ultima fase, invece:
+
+> **Tutte le fasi sono ✅ COMPLETE.**
 >
-> **Apri una sessione nuova** e lancia `/cantiere:fase <N+1>` per continuare.
-
-Se era l'ultima fase (fase 3), invece:
-
-> **Cantiere chiuso!** 🎉
->
-> Tutte le 4 fasi sono complete. Fai merge della PR, e cancella il file FASI.md (non serve più).
->
-> Condensa le decisioni importanti nel CHANGELOG.md o nella documentazione del progetto.
-
-## Cosa fare se la fase non regge
-
-Se durante l'esecuzione scopri che la fase è incompleta o sbagliata:
-
-1. Scrivi cosa hai trovato nella sezione **Scoperte durante l'esecuzione** di FASI.md
-2. Committa quella sola modifica
-3. Fermati e spiega cosa serve decidere
-
-Non improvvisare un piano nuovo: il contesto è pieno di codice, le decisioni vanno prese con calma, non durante l'esecuzione.
-
-## Convenzioni
-
-- **Un commit per fase**: tutto il lavoro della fase va in un commit solo
-- **Un push per commit**: dopo il commit, push subito
-- **Una PR per cantiere**: la stessa PR si aggiorna a ogni fase, non ne crei una nuova
-- **Una sessione per fase**: completa una fase e fermati, punto.
+> **Apri una sessione nuova** e lancia `/cantiere:chiudi`: verifica che tutto giri e smonta il
+> cantiere (i file `PIANO.md` e `FASE_*.md` vanno cancellati, il perché va nel diario del progetto).
