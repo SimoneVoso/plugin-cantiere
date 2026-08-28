@@ -53,7 +53,7 @@ piano non prevedeva.>
 
 ---
 
-## `FASE_<NN>_<slug>.md` — una fase, una sessione (tetto: 4 KB)
+## `FASE_<NN>_<slug>.md` — una fase, un contesto (tetto: 4 KB)
 
 ````markdown
 # Fase <NN> — <Titolo>

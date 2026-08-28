@@ -4,6 +4,12 @@ Due sessioni che lavorano sulla stessa fase si pestano i piedi e producono un co
 Per questo, prima di aprire una fase, si guarda se ce n'è una in corso. Il segnale è fatto di tre
 controlli, dal più economico al più lento.
 
+## Chi prende il segnale
+
+Lo prende **chi tocca i file**, cioè l'agente `esecutore`, non chi coordina. Le skill che
+coordinano (`/cantiere:fase`, `/cantiere:veloce`, `/cantiere:notturno`) il segnale lo **leggono**
+prima di mandare l'esecutore, per non aprire una fase che è già aperta altrove.
+
 ## Prendere il segnale (prima di toccare qualunque file)
 
 ```bash

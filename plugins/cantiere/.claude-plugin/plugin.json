@@ -1,6 +1,6 @@
 {
   "name": "cantiere",
-  "description": "Il metodo dei cantieri: /piano scrive PIANO.md e le fasi (con diritto di veto), /fase ne esegue una per sessione, /veloce fa passo-controllo-commit-clear, /notturno lavora da solo un giro all'ora, /chiudi smonta il cantiere. Tutte le skill girano su opus a impegno massimo; l'agente lettore esplora su modello economico.",
+  "description": "Il metodo dei cantieri: /piano scrive PIANO.md e le fasi (con diritto di veto), /fase ne esegue una e si ferma, /veloce le fa in catena senza chiedere niente, /notturno lavora da solo un giro all'ora, /chiudi smonta il cantiere. Le fasi le esegue l'agente esecutore in un contesto pulito, cosi non serve nessun /clear fra una e l'altra: pianificare gira su opus a impegno massimo, sviluppare su sonnet a impegno medio, esplorare su haiku.",
   "version": "1.0.0",
   "author": {
     "name": "Simone Voso"

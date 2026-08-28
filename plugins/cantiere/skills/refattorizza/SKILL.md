@@ -1,10 +1,10 @@
 ---
 name: refattorizza
-description: Passata di refattorizzazione sul codice toccato dal cantiere, con le linee guida di Robert C. Martin (Clean Code, SOLID, regola del boy scout). Non cambia il comportamento, e i test devono essere verdi prima e dopo. La lancia da sola /cantiere:notturno ogni cinque fasi.
+description: Passata di refattorizzazione sul codice toccato dal cantiere, con le linee guida di Robert C. Martin (Clean Code, SOLID, regola del boy scout). Non cambia il comportamento, e i test devono essere verdi prima e dopo. La fa fare da sola /cantiere:notturno ogni cinque fasi, mandandoci l'agente esecutore.
 argument-hint: "[zona da rifattorizzare]"
 disable-model-invocation: true
-model: opus
-effort: max
+model: sonnet
+effort: medium
 ---
 
 # /cantiere:refattorizza — la passata di Robert Martin
@@ -12,7 +12,9 @@ effort: max
 Zona: **$ARGUMENTS** (se è vuoto, il codice toccato dalle fasi del cantiere: `git diff` rispetto al
 ramo base, o gli ultimi commit `cantiere fase`).
 
-ultrathink
+Quando è il cantiere a chiedere la passata — `/cantiere:notturno` ogni cinque fasi — queste stesse
+righe le esegue l'agente `esecutore` nel suo contesto. Lanciata a mano, invece, la passata la fai
+qui: è corta e sta in una volta sola.
 
 ## La regola che viene prima di tutte
 
