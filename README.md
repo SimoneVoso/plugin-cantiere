@@ -94,8 +94,14 @@ e per un gruppo parallelo:
 ```
 
 Sembra poco e invece è l'unica cosa che, mentre il cantiere macina da solo, fa capire da fuori a che
-punto è e quanto manca — senza aprire `PIANO.md` e senza chiedere. Vale sempre, anche quando le fasi
-sono due.
+punto è e quanto manca — senza aprire `PIANO.md` e senza chiedere.
+
+**Il totale non si omette mai**, e non solo in apertura: sta nella riga di chiusura di ogni fase
+(«fase 3 di 7 ✅»), nella riga della prossima («prossima: fase 4 di 7»), nella risposta
+dell'esecutore, nel registro del cantiere notturno (`Fasi complete: 3 di 7`, aggiornato a ogni giro)
+e nel conto finale, che si apre con i numeri: `7 fasi su 7`, oppure `5 su 7` e quali mancano. Il
+numero vero è quello della tabella di `PIANO.md`: è l'unico posto in cui il totale è aggiornato, e
+nessuno lo tira a mente.
 
 ## I tre modi di lavorare
 

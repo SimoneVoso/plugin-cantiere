@@ -162,7 +162,8 @@ Il racconto lungo lo farai alla fine.
 
 Quattro casi, e in tutti si scrive prima di fermarsi:
 
-1. **Le fasi sono finite.** Tutte `✅ COMPLETA`: il cantiere è pronto da chiudere. Dillo e **chiedi
+1. **Le fasi sono finite.** Tutte `✅ COMPLETA`: il cantiere è pronto da chiudere. Dillo **con i
+   numeri** — «7 fasi su 7» — e **chiedi
    se chiuderlo** (`/cantiere:chiudi` verifica tutto, condensa il perché e cancella i file del
    cantiere). È l'unica domanda che questa skill fa: cancellare file e aprire la PR è una decisione,
    non una faccenda da sbrigare in automatico.
@@ -179,7 +180,9 @@ Quattro casi, e in tutti si scrive prima di fermarsi:
 
 ## Come chiudi
 
-Poche righe, alla fine di tutta la catena: quante fasi hai fatto e come si chiamavano, quali sono
-andate in parallelo, cosa hanno stampato le verifiche in una riga l'una, cosa è finito in
+Poche righe, alla fine di tutta la catena. Si apre **sempre con i numeri** — `7 fasi su 7`, o
+`5 su 7` se ti sei fermato prima, e in quel caso quali mancano: è la prima cosa che si guarda, e una
+catena lunga senza quel conto costringe a contare le righe a mano. Poi: come si chiamavano le fasi,
+quali sono andate in parallelo, cosa hanno stampato le verifiche in una riga l'una, cosa è finito in
 **Scoperte**, e qual è il passo dopo. È l'unica cosa che l'utente leggerà davvero: mettici quello che
 serve per decidere, non il diario dei giri.

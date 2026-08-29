@@ -93,7 +93,8 @@ cosa serve decidere.
 
 ## 7. Chiudi il giro
 
-Tre righe: cosa è stato fatto, cosa ha detto la verifica, qual è la fase successiva. Poi:
+Tre righe: cosa è stato fatto, cosa ha detto la verifica, qual è la fase successiva — e anche lì il
+numero va sul totale: «prossima: fase 4 di 7». Poi:
 
 > **Fase <NN> di <N> completata, committata e pushata.** La PR è aggiornata.
 >

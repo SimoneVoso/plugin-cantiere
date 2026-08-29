@@ -130,11 +130,13 @@ File toccati: <i percorsi, separati da virgola>
 Verifica: <comando lanciato> → <cosa ha stampato>
 Commit: <sha> «<messaggio>» — pushato su <ramo>
 Scoperte: <una riga, oppure «nessuna»>
-Prossima: <NN+1 e titolo, oppure «era l'ultima»>
+Prossima: <NN+1 di <N> e titolo, oppure «era l'ultima delle <N>»>
 ```
 
-`<N>` è il totale delle fasi, che leggi dalla tabella di `PIANO.md`: chi ti ha chiamato lo ridice
-all'utente, e «fase 3 di 7» è l'unica riga da cui si capisce a che punto è il lavoro. In **modalità
+`<N>` è il totale delle fasi, che leggi dalla tabella di `PIANO.md`, e **non si omette mai**: né
+nella prima riga né in `Prossima`, nemmeno quando è ovvio, nemmeno quando la fase è l'ultima. Un
+numero senza il suo totale non dice a che punto è il lavoro, e chi ti ha chiamato non ha altro modo
+di saperlo senza riaprire il piano. In **modalità
 parallela** la riga `Commit` è `— (modalità parallela)`, e `File toccati` serve al caposquadra per
 controllare che nessuno sia uscito dal suo perimetro: elencali per intero, non scrivere «vari».
 
