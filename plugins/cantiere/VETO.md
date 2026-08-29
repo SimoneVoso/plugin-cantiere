@@ -9,12 +9,12 @@ viola una regola, la fase si ferma e il veto si applica lì.
 ## Le nove regole non negoziabili
 
 1. **Nessuna fase senza verifica eseguibile.** Un comando, un test, una schermata da guardare. «Controllare che funzioni» non è una verifica: se non sai dire come si vede che è fatto, non è una fase.
-2. **Una fase = un contesto = un commit.** Il contesto è quello di chi la esegue: l'agente `esecutore`, che parte pulito e non vede nient'altro. Se una fase non ci sta dentro, o produce un commit che non ha senso da solo, va spezzata prima di essere scritta. Due fasi insieme, o due esecutori in parallelo, sono la stessa violazione.
+2. **Una fase = un contesto. Un giro = un commit.** Il contesto è quello di chi la esegue: l'agente `esecutore`, che parte pulito e non vede nient'altro. Se una fase non ci sta dentro, o produce un commit che non ha senso da solo, va spezzata prima di essere scritta. Due fasi nello stesso contesto restano una violazione, sempre. Due esecutori **in parallelo** si ammettono solo come *gruppo parallelo* di `/cantiere:veloce`, alle quattro condizioni di `${CLAUDE_PLUGIN_ROOT}/PARALLELO.md` — file disgiunti, nessuna dipendenza, verifiche che convivono, fasi normali — con un commit solo per il gruppo e `PIANO.md` toccato dal solo caposquadra. Fuori da quelle condizioni è la violazione di prima.
 3. **Ancore, non descrizioni.** `percorso/file.ext:120`, mai «nella zona del pulsante». Un riferimento vago costringe chi esegue a riesplorare, e riesplorare è esattamente il costo che questo metodo esiste per evitare.
 4. **Nessuna fase può dipendere da scoperte di una fase successiva.** L'ordine delle fasi è un ordine vero, non una lista.
 5. **I nomi sono quelli, sempre.** `PIANO.md` in radice, `FASE_<NN>_<slug>.md` accanto. Niente `FASI.md`, niente `piano-v2-definitivo.md`, niente nomi inventati per l'occasione.
 6. **Chi pianifica non esegue.** La sessione che scrive il piano ha in pancia tutta l'esplorazione: eseguire da lì vanifica il metodo. Nemmeno la prima fase, nemmeno se è banale — e nemmeno delegandola all'esecutore: il contesto che coordina resterebbe comunque quello gonfio della pianificazione.
-7. **Una fase finita si committa.** Sempre, prima di fermarsi. Lavoro non committato è lavoro perso, e in una sessione cloud lo è davvero.
+7. **Una fase finita si committa.** Sempre, prima di fermarsi — in un gruppo parallelo lo fa il caposquadra, per tutto il gruppo insieme. Lavoro non committato è lavoro perso, e in una sessione cloud lo è davvero.
 8. **Niente allargamenti.** Pulizie, rinomine e miglioramenti non chiesti non entrano in una fase: si scrivono in **Scoperte durante l'esecuzione** e si decidono con calma.
 9. **Un cantiere finito si smonta.** All'ultima fase i file del cantiere si cancellano e il perché si condensa nel diario del progetto. Un `PIANO.md` con «Stato: fatto» lasciato in giro è peso che ogni sessione futura si porta dietro senza usarlo mai.
 

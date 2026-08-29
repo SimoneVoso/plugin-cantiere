@@ -10,11 +10,17 @@ Lo prende **chi tocca i file**, cioè l'agente `esecutore`, non chi coordina. Le
 coordinano (`/cantiere:fase`, `/cantiere:veloce`, `/cantiere:notturno`) il segnale lo **leggono**
 prima di mandare l'esecutore, per non aprire una fase che è già aperta altrove.
 
+L'unica eccezione è il **gruppo parallelo** di `/cantiere:veloce`
+(`${CLAUDE_PLUGIN_ROOT}/PARALLELO.md`): lì gli esecutori sono più di uno e il segnale è uno solo,
+quindi lo prende e lo rilascia il caposquadra, con dentro tutte le fasi del gruppo
+(`fasi: 03,04`).
+
 ## Prendere il segnale (prima di toccare qualunque file)
 
 ```bash
 mkdir -p .cantiere
 printf 'fase: %s\navviata: %s\nramo: %s\n' "<NN>" "$(date -Iseconds)" "$(git rev-parse --abbrev-ref HEAD)" > .cantiere/IN-CORSO
+# per un gruppo parallelo, la prima riga è invece: fasi: 03,04
 grep -qxF '.cantiere/' .gitignore 2>/dev/null || echo '.cantiere/' >> .gitignore
 ```
 

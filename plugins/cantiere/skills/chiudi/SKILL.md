@@ -17,8 +17,10 @@ cancella. Mai al contrario.
 
 ## 1. Tutte le fasi sono chiuse?
 
-Leggi la tabella di `PIANO.md`. Se una fase non è `✅ COMPLETA`, **fermati qui**: di' quale manca e
-che va fatta (`/cantiere:fase <NN>`). Un cantiere non si chiude saltando una fase.
+Leggi la tabella di `PIANO.md`. Da lì prendi anche il **totale delle fasi**, che ti serve nelle
+righe finali: qui si dice `<N> fasi su <N>`, non «tutte». Se una fase non è `✅ COMPLETA`,
+**fermati qui**: di' quale manca, su quante (`manca la 5 di 7`), e che va fatta
+(`/cantiere:fase <NN>`). Un cantiere non si chiude saltando una fase.
 
 Se in **Scoperte durante l'esecuzione** c'è qualcosa di irrisolto, portalo all'utente adesso: è
 l'ultimo momento in cui qualcuno lo leggerà.
@@ -82,7 +84,7 @@ Apri la PR se non esiste, o aggiornala se c'è già. Titolo `Cantiere: <nome>`; 
 
 > **Cantiere chiuso.** ✅
 >
-> Tutte le fasi verificate, il perché è finito in `<file del diario>`, i file del cantiere
+> Tutte e <N> le fasi verificate, il perché è finito in `<file del diario>`, i file del cantiere
 > (`PIANO.md`, `FASE_*.md`, `.cantiere/`) sono stati cancellati.
 >
 > La PR è pronta da rivedere e fondere: `<link>`.
